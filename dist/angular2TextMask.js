@@ -35,18 +35,12 @@ var MaskedInputDirective = (function () {
         this._onChange = function (_) { };
     }
     MaskedInputDirective.prototype.ngOnChanges = function (changes) {
-        if (this.textMaskConfig === undefined) {
-            return;
-        }
-        this.setupMask(true);
+        this.setupMask(this.textMaskConfig === undefined);
         if (this.textMaskInputElement !== undefined) {
             this.textMaskInputElement.update(this.inputElement.value);
         }
     };
     MaskedInputDirective.prototype.writeValue = function (value) {
-        if (this.textMaskConfig === undefined) {
-            return;
-        }
         this.setupMask();
         // set the initial value for cases where the mask is disabled
         var normalizedValue = value == null ? '' : value;
@@ -61,9 +55,6 @@ var MaskedInputDirective = (function () {
         this.renderer.setElementProperty(this.element.nativeElement, 'disabled', isDisabled);
     };
     MaskedInputDirective.prototype.onInput = function (value) {
-        if (this.textMaskConfig === undefined) {
-            return;
-        }
         this.setupMask();
         if (this.textMaskInputElement !== undefined) {
             this.textMaskInputElement.update(value);
